@@ -1,4 +1,3 @@
-============
 Space Bodies
 ============
 
@@ -31,7 +30,7 @@ Contribute
 
 #. Check for open issues, or create a new one.
 #. Fork `the repository`_, make your changes to **master** (or your own
-branch).
+   branch).
 #. Make sure it's got a test to cover it (and you don't break any others).
 #. Send a pull request and we'll make sure it gets merged.
 
@@ -44,6 +43,6 @@ Credits
 -------
 
 - Nick Charlton <hello@nickcharlton.net> is the primary maintainer and setup
-the package and plugin system.
+  the package and plugin system.
 - Emma Hibling did all the actual smart bits.
 
