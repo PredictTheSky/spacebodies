@@ -7,8 +7,8 @@ then combines that with weather data to tell you what you can see in the sky.
 The library is named after the primary class. Astronomical objects are
 sometimes called "bodies", thus the name.
 
-It uses a simple plugin system for supporting different astronomical objects,
-which is exposed as a standardised interface.
+All of the astronomical objects are provided from the same public interface,
+using a string which defines which ones are supported.
 
 .. code-block:: pycon
    
