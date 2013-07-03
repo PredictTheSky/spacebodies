@@ -28,6 +28,8 @@ To install Space Bodies:
 
    $ pip install spacebodies
 
+spacebodies requires Python 2.7.
+
 Contribute
 ----------
 
