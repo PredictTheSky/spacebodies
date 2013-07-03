@@ -1,6 +1,9 @@
 Space Bodies
 ============
 
+.. image:: https://secure.travis-ci.org/PredictTheSky/spacebodies.png?branch=master
+           :target: http://travis-ci.org/PredictTheSky/spacebodies
+
 Space Bodies is the library that powers `Predict the Sky
 <http://predictthesky.org>`_. It handles calculating space object positions and
 then combines that with weather data to tell you what you can see in the sky.
