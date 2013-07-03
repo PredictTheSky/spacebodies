@@ -29,4 +29,5 @@ setup(
     package_dir={'spacebodies': 'spacebodies'},
     install_requires=install_requires,
     zip_safe=False,
+    test_suite="tests.get_tests"
 )

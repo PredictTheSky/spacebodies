@@ -13,7 +13,7 @@ See the Abstract Base Class, SpaceBody on the required elements.
 
 import datetime
 
-import SpaceBody
+from .spacebody import SpaceBody
 
 
 class ISS(SpaceBody):

@@ -16,7 +16,6 @@ __author__ = 'Nick Charlton'
 __licence__ = 'MIT'
 __copyright__ = 'Copyright 2013 The Predict the Sky Team'
 
-from . import utils
 from .spacebodies import SpaceBodies
 from .spacebody import SpaceBody
 from .bodies import ISS
