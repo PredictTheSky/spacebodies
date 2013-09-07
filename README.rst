@@ -33,6 +33,11 @@ spacebodies requires Python 2.7.
 Contribute
 ----------
 
+.. code-block:: bash
+
+   $ pip install -r requirements.txt
+   $ python setup.py test
+
 #. Check for open issues, or create a new one.
 #. Fork `the repository`_, make your changes to **master** (or your own
    branch).
