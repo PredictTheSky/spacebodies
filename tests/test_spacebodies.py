@@ -17,7 +17,7 @@ class SpaceBodiesTestCase(unittest.TestCase):
     def setUp(self):
         self.space_bodies = spacebodies.SpaceBodies()
 
-    def test_next_events(self):
+    def test_next_iss_events(self):
         test_timestamp = datetime.datetime(2013, 7, 6, 0, 0)
         events = self.space_bodies.next_events("iss", lat="50.7184",
             lon="-3.5339", timestamp=test_timestamp)
@@ -32,6 +32,12 @@ class SpaceBodiesTestCase(unittest.TestCase):
         self.assertEqual(len(events), 48)
         self.assertEqual("2013/7/6 09:19:39", str(events[0].start))
         self.assertEqual("2013/7/15 11:39:01", str(events[-1].start))
+
+    def test_next_mars_events(self):
+        test_timestamp = datetime.datetime(2013, 9, 7, 0, 0)
+        events = self.space_bodies.next_events("mars", lat="50.7184",
+            lon="-3.5339", timestamp=test_timestamp)
+        self.assertEqual(len(events), 10)
         
 
 if __name__ == '__main__':

@@ -30,4 +30,8 @@ class SpaceEvent(object):
     def end(self, end, location):
         self.end = end
         self.end_location = location
-            
+
+    def __str__(self):
+        return "%s start %s (%s), end %s (%s)" % (self.name, self.start,
+                                                  self.start_location,
+                                                  self.end, self.end_location)

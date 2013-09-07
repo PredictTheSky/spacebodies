@@ -10,13 +10,13 @@ This module provides the public interface to the library.
 
 import datetime
 
-from bodies import ISS
+from bodies import ISS, Mars
 
 
 class SpaceBodies(object):
     """The public interface to the library."""
     def __init__(self):
-        self.bodies = {'iss': ISS}
+        self.bodies = {'iss': ISS, 'mars': Mars}
 
     def next_events(self, body, lat, lon, timestamp=datetime.datetime.now):
         """
