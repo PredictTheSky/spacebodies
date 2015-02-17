@@ -1,5 +1,7 @@
 import datetime, forecastio
 
+SKY_STATE = ['clear', 'scattered cloud', 'cloudy with breaks', 'cloudy']
+
 class Forecast():
 
     """
@@ -51,9 +53,9 @@ class Weather():
 
     def _cloud_to_summary(self, cloud_fraction):
         if cloud_fraction < .1:
-            return 'clear'
+            return SKY_STATE[0]
         if cloud_fraction < .4:
-            return 'scattered cloud'
+            return SKY_STATE[1]
         if cloud_fraction < .75:
-            return 'cloudy with breaks'
-        return 'cloudy'
+            return SKY_STATE[2]
+        return SKY_STATE[3]
