@@ -9,14 +9,25 @@ This module provides the public interface to the library.
 """
 
 import datetime
-
-from bodies import ISS, Mars
+import bodies
 
 
 class SpaceBodies(object):
     """The public interface to the library."""
     def __init__(self):
-        self.bodies = {'iss': ISS, 'mars': Mars}
+        self.spacebodies = {
+            'iss': bodies.ISS(),
+            'mercury': bodies.Mercury(),
+            'venus': bodies.Venus(),
+            'mars': bodies.Mars(),
+            'jupiter': bodies.Jupiter(),
+            'saturn': bodies.Saturn(),
+            'uranus': bodies.Uranus(),
+            'neptune': bodies.Neptune(),
+            'pluto': bodies.Pluto(),
+        }
+        for k, v in bodies.STAR_CATALOG.iteritems():
+            self.spacebodies[v['id']] = bodies.Star(v['name'])
 
     def next_events(self, body, lat, lon, timestamp=datetime.datetime.now):
         """
@@ -27,5 +38,5 @@ class SpaceBodies(object):
         :param lon: Longitude of the location in degrees.
         :param timestamp: DateTime timestamp. Defaults to now.
         """
-        action = self.bodies[body]()
-        return action.next_events(lat, lon, timestamp)
+        spacebody = self.spacebodies[body]
+        return spacebody.next_events(lat, lon, timestamp)
