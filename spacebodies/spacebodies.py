@@ -14,6 +14,8 @@ import bodies
 
 class SpaceBodies(object):
     """The public interface to the library."""
+    ERROR_NO_BODY = "There is no such body in catalog"
+
     def __init__(self):
         self.spacebodies = {
             'iss': bodies.ISS(),
@@ -38,5 +40,8 @@ class SpaceBodies(object):
         :param lon: Longitude of the location in degrees.
         :param timestamp: DateTime timestamp. Defaults to now.
         """
-        spacebody = self.spacebodies[body]
-        return spacebody.next_events(lat, lon, timestamp)
+        try:
+            spacebody = self.spacebodies[body]
+            return spacebody.next_events(lat, lon, timestamp)
+        except KeyError:
+            return self.ERROR_NO_BODY
