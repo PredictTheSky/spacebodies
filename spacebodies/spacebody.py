@@ -12,6 +12,7 @@ event types.
 
 import abc
 import datetime, ephem
+from .forecast import Forecast
 
 from .spaceevent import SpaceEvent
 
@@ -29,6 +30,7 @@ class SpaceBody(object):
         :param timestamp: DateTime timestamp. Defaults to now.
         """
         observer = ephem.Observer()
+        forecaster = Forecast(lat, lon)
         observer.lat, observer.lon = lat, lon
         date = ephem.Date(timestamp)
         ten_days_later = date + 10
@@ -41,7 +43,8 @@ class SpaceBody(object):
             if self.body.rise_time > ten_days_later:
                 break
             if self._is_transit_visible():
-                events.append(self._next_event())            
+                weather = forecaster.forecast(observer.date.datetime())
+                events.append(self._next_event(weather.cloud_cover))
             date = self.nudge_date()
         return events
 
@@ -60,8 +63,10 @@ class SpaceBody(object):
     def _is_transit_visible(self):
         return self.body.transit_alt > ephem.degrees("10")
 
-    def _next_event(self):
+    def _next_event(self, sky_state):
         event = SpaceEvent(self.id, self.name, self.category)
         event.start(self.body.rise_time, (0, self.body.rise_az))
         event.end(self.body.set_time, (0, self.body.set_az))
+        event.sky_state(sky_state)
+
         return event

@@ -11,7 +11,7 @@ class Forecast():
     """
     
     def __init__(self, lat, lon):
-        self._api_key = ''
+        self._api_key = '35753e2516b4b687b9d7eedc924069bd'
         self.lat = lat
         self.lon = lon
 

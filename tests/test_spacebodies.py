@@ -10,6 +10,7 @@ import datetime
 import unittest
 
 import spacebodies
+from spacebodies import forecast
 
 
 class SpaceBodiesTestCase(unittest.TestCase):
@@ -99,6 +100,13 @@ class SpaceBodiesTestCase(unittest.TestCase):
         events = self.space_bodies.next_events("unknown_star", lat="50.7184",
             lon="-3.5339", timestamp=test_timestamp)
         self.assertEqual(events, "There is no such body in catalog")
+
+    def test_next_events_have_weather(self):
+        test_timestamp = datetime.datetime(2013, 9, 7, 0, 0)
+        events = self.space_bodies.next_events("mars", lat="50.7184",
+            lon="-3.5339", timestamp=test_timestamp)
+        for event in events:
+            self.assertIn(event.sky_state, forecast.SKY_STATE)
 
 if __name__ == '__main__':
     unittest.main()

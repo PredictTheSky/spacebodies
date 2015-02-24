@@ -31,6 +31,9 @@ class SpaceEvent(object):
         self.end = end
         self.end_location = location
 
+    def sky_state(self,sky_state):
+        self.sky_state = sky_state
+
     def __str__(self):
         return "%s start %s (%s), end %s (%s)" % (self.name, self.start,
                                                   self.start_location,
