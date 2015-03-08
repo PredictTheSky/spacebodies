@@ -12,7 +12,9 @@ event types.
 
 import abc
 import datetime, ephem
+from pprint import pprint
 from .forecast import Forecast
+from .tle_data import TLE_getter
 
 from .spaceevent import SpaceEvent
 
@@ -34,6 +36,10 @@ class SpaceBody(object):
         observer.lat, observer.lon = lat, lon
         date = ephem.Date(timestamp)
         ten_days_later = date + 10
+        if self.category is 'satellite':
+            tle_getter = TLE_getter()
+            self.tle = tle_getter.get_data(self.id)
+            self.body = ephem.readtle(self.tle.tle_line0, self.tle.tle_line1, self.tle.tle_line2)
 
         events = []
         while date <= ten_days_later:
@@ -46,6 +52,7 @@ class SpaceBody(object):
                 weather = forecaster.forecast(observer.date.datetime())
                 events.append(self._next_event(weather.cloud_cover))
             date = self.nudge_date()
+
         return events
 
     @abc.abstractmethod

@@ -1,28 +1,30 @@
-import datetime, forecastio
+import datetime
+
+import forecastio
 
 SKY_STATE = ['clear', 'scattered cloud', 'cloudy with breaks', 'cloudy']
 
-class Forecast():
 
+class Forecast():
     """
     For an event, we need to get a forecast from the api for the datetime.
     For the specified timestamp, find the closest appropriate forecast and
     pull out the required forecast attrs.
     """
-    
+
     def __init__(self, lat, lon):
-        self._api_key = '35753e2516b4b687b9d7eedc924069bd'
+        self._api_key = ''
         self.lat = lat
         self.lon = lon
 
     def forecast(self, event_dt):
         nearest_forecast_time = self._nearest_hour(event_dt)
         forecast_day = forecastio.load_forecast(self._api_key,
-                self.lat, self.lon, nearest_forecast_time)
+                                                self.lat, self.lon, nearest_forecast_time)
         hourly_forecast = forecast_day.hourly()
         for hour in hourly_forecast.data:
             if hour.time == nearest_forecast_time:
-               return Weather(hour)
+                return Weather(hour)
         return
 
     def _nearest_hour(self, dt):
@@ -38,7 +40,6 @@ class Forecast():
 
 
 class Weather():
-
     """
     Data class to store attrs required for space event forecasts.
     Construct with a forecastio data point object.
@@ -49,7 +50,7 @@ class Weather():
         self.chance_of_prep = forecast_datapoint.precipProbability
         self.temperature = forecast_datapoint.temperature
         self.feels_like_temperature = forecast_datapoint.apparentTemperature
-        
+
 
     def _cloud_to_summary(self, cloud_fraction):
         if cloud_fraction < .1:
