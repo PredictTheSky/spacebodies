@@ -397,8 +397,6 @@ STAR_CATALOG = {
 
 class ISS(SpaceBody):
     def __init__(self):
-        """ TLE from Space-Trak, 6th July. """
-
         self.id = "25544"
         self.name = "International Space Station"
         self.category = "satellite"

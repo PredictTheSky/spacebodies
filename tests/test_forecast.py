@@ -16,7 +16,7 @@ class TestForecast(unittest.TestCase):
                          datetime.datetime(2014, 3, 2, 1, 0))
 
     def test_integration(self):
-        #Will fail without an API key :(
+        # Will fail without an API key :(
         dt = datetime.datetime.now()
         forecaster = forecast.Forecast(50.71, -3.53)
         weather = forecaster.forecast(dt)
