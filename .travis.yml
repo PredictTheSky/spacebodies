@@ -1,5 +1,10 @@
 language: python
 python:
-    - 2.7
+- 2.7
 install: pip install -r requirements.txt --use-mirrors
 script: python setup.py test
+env:
+  global:
+  - secure: ewdaCBFPRdO+LjI9Etvnnzu4cRcPhN7Paj93pPIXi+rkVkurYgxyqE385Bqfh0ZcKltWUwzbA0edFysMJGaNq7w9zCeO1BIF+iq/nZBfPa8Uup7tPIUxCNz68YM0b7XR66jkAyErpyxjsLO54pKw9kHF5BowXorNEAwiWj9oZMg=
+  - secure: LbtV8aHcdgSgKpQslj8ksHznzFlgBbgjCsthevGagSChTFvaPtTG8DUKwkoQf9a6KXzAXm605BkgVsmXWIP2IhGZ9JQCA3RVU9APEfL4lNVfB5opVfiVMwEK1ODFWjHxx1xifjIS367H3S2sc207nemHaMvQbIzEup3LZhXrzDs=
+  - secure: RuNE66bcy7lt8iKvPlhsi+L1/RM9sBedLf9HwPRJStCb2jbis65IH7SgGZEI8Zk8eqVpVRze1Ap6Ad9TU7W6K0PWFlAnPjDUJY7S52oN+pU906X3u3+3K0rOZqvRlEjavu++YT/s+KCmD5xFGRhF0MM8PNxiE1Yq7QEmF5qccZ0=
