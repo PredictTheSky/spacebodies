@@ -22,7 +22,7 @@ from .spaceevent import SpaceEvent
 class SpaceBody(object):
     __metaclass__ = abc.ABCMeta
 
-    def next_events(self, lat, lon, timestamp=datetime.datetime.now):
+    def next_events(self, lat, lon, timestamp=None):
         """
         Calculate the next set of space events at a given time
         using the latitude/longitude pair.
@@ -31,6 +31,9 @@ class SpaceBody(object):
         :param lon: Longitude of the location in degrees.
         :param timestamp: DateTime timestamp. Defaults to now.
         """
+        if timestamp is None:
+            timestamp = datetime.datetime.now()
+
         observer = ephem.Observer()
         forecaster = Forecast(lat, lon)
         observer.lat, observer.lon = lat, lon

@@ -102,6 +102,14 @@ class SpaceBodiesTestCase(unittest.TestCase):
                                                timestamp=test_timestamp)
         self.assertEqual(len(events), 10)
 
+    def test_next_events_with_default_timestamp(self):
+        events = self.space_bodies.next_events("mercury", lat="50.7184",
+                                               lon="-3.5339")
+
+        # we're checking that the type responds correctly, but we're not
+        # worried about the results
+        self.assertIsInstance(events, list)
+
     def test_next_unknown_star_events(self):
         test_timestamp = datetime.datetime(2013, 9, 7, 0, 0)
         events = self.space_bodies.next_events("unknown_star", lat="50.7184",

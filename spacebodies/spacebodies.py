@@ -31,7 +31,7 @@ class SpaceBodies(object):
         for k, v in bodies.STAR_CATALOG.iteritems():
             self.spacebodies[v['id']] = bodies.Star(v['name'])
 
-    def next_events(self, body, lat, lon, timestamp=datetime.datetime.now):
+    def next_events(self, body, lat, lon, timestamp=None):
         """
         Get the next events for a given space body, location and time.
 
@@ -40,6 +40,9 @@ class SpaceBodies(object):
         :param lon: Longitude of the location in degrees.
         :param timestamp: DateTime timestamp. Defaults to now.
         """
+        if timestamp is None:
+            timestamp = datetime.datetime.now()
+
         try:
             spacebody = self.spacebodies[body]
             return spacebody.next_events(lat, lon, timestamp)
