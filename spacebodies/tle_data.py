@@ -13,12 +13,12 @@ import requests
 
 class TLE_getter(object):
 
-    def __init__(self):
-        self._login = ''  # Provide login to space-track.org
-        self._password = ''  # Provide password
+    def __init__(self, username, password):
+        self._username = username
+        self._password = password
         self._api_auth_url = 'https://www.space-track.org/ajaxauth/login'
         self.session = requests.session()
-        data = {"identity": self._login, "password": self._password}
+        data = {"identity": self._username, "password": self._password}
         self.session.post(self._api_auth_url, data)
 
     def get_data(self, id):

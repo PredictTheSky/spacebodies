@@ -22,6 +22,9 @@ from .spaceevent import SpaceEvent
 class SpaceBody(object):
     __metaclass__ = abc.ABCMeta
 
+    def __init__(self, config):
+        self._config = config
+
     def next_events(self, lat, lon, timestamp=None):
         """
         Calculate the next set of space events at a given time
@@ -35,12 +38,13 @@ class SpaceBody(object):
             timestamp = datetime.datetime.now()
 
         observer = ephem.Observer()
-        forecaster = Forecast(lat, lon)
+        forecaster = Forecast(self._config.forecast_key, lat, lon)
         observer.lat, observer.lon = lat, lon
         date = ephem.Date(timestamp)
         ten_days_later = date + 10
         if self.category is 'satellite':
-            tle_getter = TLE_getter()
+            tle_getter = TLE_getter(self._config.spacetrack_username,
+                                    self._config.spacetrack_password)
             self.tle = tle_getter.get_data(self.id)
             self.body = ephem.readtle(self.tle.tle_line0, self.tle.tle_line1,
                                       self.tle.tle_line2)

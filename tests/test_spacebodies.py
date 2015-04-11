@@ -8,6 +8,7 @@ The test case for SpaceBodies
 
 import datetime
 import unittest
+import os
 
 import spacebodies
 from spacebodies import forecast
@@ -15,7 +16,13 @@ from spacebodies import forecast
 
 class SpaceBodiesTestCase(unittest.TestCase):
     def setUp(self):
-        self.space_bodies = spacebodies.SpaceBodies()
+        forecast_key = os.getenv('FORECAST_KEY', '')
+        spacetrack_username = os.getenv('SPACETRACK_USERNAME', '')
+        spacetrack_password = os.getenv('SPACETRACK_PASSWORD', '')
+
+        self.space_bodies = spacebodies.SpaceBodies(forecast_key,
+                                                    spacetrack_username,
+                                                    spacetrack_password)
 
     def test_next_iss_events(self):
         test_timestamp = datetime.datetime.now()

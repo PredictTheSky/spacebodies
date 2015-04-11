@@ -12,8 +12,8 @@ class Forecast(object):
     pull out the required forecast attrs.
     """
 
-    def __init__(self, lat, lon):
-        self._api_key = ''
+    def __init__(self, api_key, lat, lon):
+        self._api_key = api_key
         self.lat = lat
         self.lon = lon
 

@@ -12,24 +12,37 @@ import datetime
 import bodies
 
 
+class Config(object):
+    def __init__(self):
+        self.forecast_key = ''
+        self.spacetrack_username = ''
+        self.spacetrack_password = ''
+
+
 class SpaceBodies(object):
     """The public interface to the library."""
     ERROR_NO_BODY = "There is no such body in catalog"
 
-    def __init__(self):
+    def __init__(self, forecast_key='', spacetrack_username='',
+                 spacetrack_password=''):
+        self._config = Config()
+        self._config.forecast_key = forecast_key
+        self._config.spacetrack_username = spacetrack_username
+        self._config.spacetrack_password = spacetrack_password
+
         self.spacebodies = {
-            'iss': bodies.ISS(),
-            'mercury': bodies.Mercury(),
-            'venus': bodies.Venus(),
-            'mars': bodies.Mars(),
-            'jupiter': bodies.Jupiter(),
-            'saturn': bodies.Saturn(),
-            'uranus': bodies.Uranus(),
-            'neptune': bodies.Neptune(),
-            'pluto': bodies.Pluto(),
+            'iss': bodies.ISS(self._config),
+            'mercury': bodies.Mercury(self._config),
+            'venus': bodies.Venus(self._config),
+            'mars': bodies.Mars(self._config),
+            'jupiter': bodies.Jupiter(self._config),
+            'saturn': bodies.Saturn(self._config),
+            'uranus': bodies.Uranus(self._config),
+            'neptune': bodies.Neptune(self._config),
+            'pluto': bodies.Pluto(self._config),
         }
         for k, v in bodies.STAR_CATALOG.iteritems():
-            self.spacebodies[v['id']] = bodies.Star(v['name'])
+            self.spacebodies[v['id']] = bodies.Star(self._config, v['name'])
 
     def next_events(self, body, lat, lon, timestamp=None):
         """

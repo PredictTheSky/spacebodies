@@ -396,7 +396,9 @@ STAR_CATALOG = {
 
 
 class ISS(SpaceBody):
-    def __init__(self):
+    def __init__(self, config):
+        super(self.__class__, self).__init__(config)
+
         self.id = "25544"
         self.name = "International Space Station"
         self.category = "satellite"
@@ -406,7 +408,9 @@ class ISS(SpaceBody):
 
 
 class Mercury(SpaceBody):
-    def __init__(self):
+    def __init__(self, config):
+        super(self.__class__, self).__init__(config)
+
         self.body = ephem.Mercury()
         self.id = "mercury"
         self.name = "Mercury"
@@ -417,7 +421,9 @@ class Mercury(SpaceBody):
 
 
 class Venus(SpaceBody):
-    def __init__(self):
+    def __init__(self, config):
+        super(self.__class__, self).__init__(config)
+
         self.body = ephem.Venus()
         self.id = "venus"
         self.name = "Venus"
@@ -428,7 +434,9 @@ class Venus(SpaceBody):
 
 
 class Mars(SpaceBody):
-    def __init__(self):
+    def __init__(self, config):
+        super(self.__class__, self).__init__(config)
+
         self.body = ephem.Mars()
         self.id = "mars"
         self.name = "Mars"
@@ -439,7 +447,9 @@ class Mars(SpaceBody):
 
 
 class Jupiter(SpaceBody):
-    def __init__(self):
+    def __init__(self, config):
+        super(self.__class__, self).__init__(config)
+
         self.body = ephem.Jupiter()
         self.id = "jupiter"
         self.name = "Jupiter"
@@ -450,7 +460,9 @@ class Jupiter(SpaceBody):
 
 
 class Saturn(SpaceBody):
-    def __init__(self):
+    def __init__(self, config):
+        super(self.__class__, self).__init__(config)
+
         self.body = ephem.Saturn()
         self.id = "saturn"
         self.name = "Saturn"
@@ -461,7 +473,9 @@ class Saturn(SpaceBody):
 
 
 class Uranus(SpaceBody):
-    def __init__(self):
+    def __init__(self, config):
+        super(self.__class__, self).__init__(config)
+
         self.body = ephem.Uranus()
         self.id = "uranus"
         self.name = "Uranus"
@@ -472,7 +486,9 @@ class Uranus(SpaceBody):
 
 
 class Neptune(SpaceBody):
-    def __init__(self):
+    def __init__(self, config):
+        super(self.__class__, self).__init__(config)
+
         self.body = ephem.Neptune()
         self.id = "neptune"
         self.name = "Neptune"
@@ -483,7 +499,9 @@ class Neptune(SpaceBody):
 
 
 class Pluto(SpaceBody):
-    def __init__(self):
+    def __init__(self, config):
+        super(self.__class__, self).__init__(config)
+
         self.body = ephem.Pluto()
         self.id = "pluto"
         self.name = "Pluto"
@@ -494,7 +512,9 @@ class Pluto(SpaceBody):
 
 
 class Star(SpaceBody):
-    def __init__(self, name):
+    def __init__(self, config, name):
+        super(self.__class__, self).__init__(config)
+
         self.body = ephem.star(STAR_CATALOG[name]['name'])
         self.id = STAR_CATALOG[name]['id']
         self.name = STAR_CATALOG[name]['name']
