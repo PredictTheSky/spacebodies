@@ -11,8 +11,8 @@ event types.
 """
 
 import abc
-import datetime, ephem
-from pprint import pprint
+import datetime
+import ephem
 from .forecast import Forecast
 from .tle_data import TLE_getter
 
@@ -39,7 +39,8 @@ class SpaceBody(object):
         if self.category is 'satellite':
             tle_getter = TLE_getter()
             self.tle = tle_getter.get_data(self.id)
-            self.body = ephem.readtle(self.tle.tle_line0, self.tle.tle_line1, self.tle.tle_line2)
+            self.body = ephem.readtle(self.tle.tle_line0, self.tle.tle_line1,
+                                      self.tle.tle_line2)
 
         events = []
         while date <= ten_days_later:
@@ -66,7 +67,6 @@ class SpaceBody(object):
         """
         pass
 
-    
     def _is_transit_visible(self):
         return self.body.transit_alt > ephem.degrees("10")
 

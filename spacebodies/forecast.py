@@ -20,7 +20,8 @@ class Forecast():
     def forecast(self, event_dt):
         nearest_forecast_time = self._nearest_hour(event_dt)
         forecast_day = forecastio.load_forecast(self._api_key,
-                                                self.lat, self.lon, nearest_forecast_time)
+                                                self.lat, self.lon,
+                                                nearest_forecast_time)
         hourly_forecast = forecast_day.hourly()
         for hour in hourly_forecast.data:
             if hour.time == nearest_forecast_time:
@@ -32,10 +33,10 @@ class Forecast():
         if dt >= cutoff:
             """ We'll use tomorrow's 00Z forecast. """
             return datetime.datetime(dt.year, dt.month, dt.day, 0, 0) + \
-                   datetime.timedelta(1)
+                datetime.timedelta(1)
         if dt.minute >= 30:
             return datetime.datetime(dt.year, dt.month, dt.day, dt.hour, 0) + \
-                   datetime.timedelta(hours=1)
+                datetime.timedelta(hours=1)
         return datetime.datetime(dt.year, dt.month, dt.day, dt.hour, 0)
 
 
@@ -46,11 +47,11 @@ class Weather():
     """
 
     def __init__(self, forecast_datapoint):
-        self.cloud_cover = self._cloud_to_summary(forecast_datapoint.cloudcover)
+        self.cloud_cover = self._cloud_to_summary(
+            forecast_datapoint.cloudcover)
         self.chance_of_prep = forecast_datapoint.precipProbability
         self.temperature = forecast_datapoint.temperature
         self.feels_like_temperature = forecast_datapoint.apparentTemperature
-
 
     def _cloud_to_summary(self, cloud_fraction):
         if cloud_fraction < .1:

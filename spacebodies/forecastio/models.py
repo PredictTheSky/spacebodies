@@ -31,7 +31,7 @@ class Forecast():
             if key not in self.json:
                 keys.remove(key)
                 url = "%s&exclude=%s%s" % (self.response.url.split('&')[0],
-                      ','.join(keys), ',alerts,flags')
+                                           ','.join(keys), ',alerts,flags')
 
                 response = requests.get(url).json()
                 self.json[key] = response[key]
@@ -46,13 +46,14 @@ class Forecast():
             else:
                 return ForecastioDataBlock()
 
+
 class ForecastioDataBlock():
     def __init__(self, d=None):
         d = d or {}
         self.summary = d.get('summary')
         self.icon = d.get('icon')
 
-        self.data = [ForecastioDataPoint(datapoint) 
+        self.data = [ForecastioDataPoint(datapoint)
                      for datapoint in d.get('data', [])]
 
     def __unicode__(self):

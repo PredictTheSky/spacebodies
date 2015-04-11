@@ -14,16 +14,17 @@ import requests
 class TLE_getter():
 
     def __init__(self):
-        self._login = '' # Provide login to space-track.org
-        self._password = '' # Provide password
+        self._login = ''  # Provide login to space-track.org
+        self._password = ''  # Provide password
         self._api_auth_url = 'https://www.space-track.org/ajaxauth/login'
         self.session = requests.session()
         data = {"identity": self._login, "password": self._password}
         self.session.post(self._api_auth_url, data)
 
     def get_data(self, id):
-        self._api_data_url = 'https://www.space-track.org/basicspacedata/query/class/tle_latest/NORAD_CAT_ID/%s/ORDINAL/1/' % (
-            id)
+        self._api_data_url = 'https://www.space-track.org/basicspacedata/' \
+                             'query/class/tle_latest/NORAD_CAT_ID/' \
+                             '%s/ORDINAL/1/' % (id)
         r = self.session.get(self._api_data_url)
         self.session.close()
         json_data = json.loads(r.text)[0]

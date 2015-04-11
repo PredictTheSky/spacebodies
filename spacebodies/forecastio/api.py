@@ -33,8 +33,7 @@ def load_forecast(key, inLat, inLong, time=None, units="auto", lazy=False,
     else:
         url_time = str(int(Time.mktime(time.timetuple())))
         url = 'https://api.forecast.io/forecast/%s/%s,%s,%s' \
-              '?units=%s' % (key, lat, lng, url_time,
-              units,)
+              '?units=%s' % (key, lat, lng, url_time, units,)
 
     if lazy is True:
         baseURL = "%s&exclude=%s" % (url,

@@ -17,7 +17,7 @@ class SpaceEvent(object):
     too many args: need to wrap space body id attrs into class, as well as
     location and (in future) weather.
     """
-    
+
     def __init__(self, body_id, name, category):
         self.id = body_id
         self.name = name
@@ -31,7 +31,7 @@ class SpaceEvent(object):
         self.end = end
         self.end_location = location
 
-    def sky_state(self,sky_state):
+    def sky_state(self, sky_state):
         self.sky_state = sky_state
 
     def __str__(self):
