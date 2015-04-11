@@ -11,7 +11,7 @@ import json
 import requests
 
 
-class TLE_getter():
+class TLE_getter(object):
 
     def __init__(self):
         self._login = ''  # Provide login to space-track.org
@@ -35,7 +35,7 @@ def _normalize_data_string(data_string):
     return data_string.encode('ascii', 'ignore')
 
 
-class TLE_data():
+class TLE_data(object):
     """
     Data class to store attrs required for space body's TLE data
     Construct with a space-track.org tle_latest data object.

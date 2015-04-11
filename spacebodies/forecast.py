@@ -5,7 +5,7 @@ import forecastio
 SKY_STATE = ['clear', 'scattered cloud', 'cloudy with breaks', 'cloudy']
 
 
-class Forecast():
+class Forecast(object):
     """
     For an event, we need to get a forecast from the api for the datetime.
     For the specified timestamp, find the closest appropriate forecast and
@@ -40,7 +40,7 @@ class Forecast():
         return datetime.datetime(dt.year, dt.month, dt.day, dt.hour, 0)
 
 
-class Weather():
+class Weather(object):
     """
     Data class to store attrs required for space event forecasts.
     Construct with a forecastio data point object.

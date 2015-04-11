@@ -2,7 +2,7 @@ import datetime
 import requests
 
 
-class Forecast():
+class Forecast(object):
     def __init__(self, data, response, headers):
         self.response = response
         self.http_headers = headers
@@ -47,7 +47,7 @@ class Forecast():
                 return ForecastioDataBlock()
 
 
-class ForecastioDataBlock():
+class ForecastioDataBlock(object):
     def __init__(self, d=None):
         d = d or {}
         self.summary = d.get('summary')
@@ -65,7 +65,7 @@ class ForecastioDataBlock():
         return unicode(self).encode('utf-8')
 
 
-class ForecastioDataPoint():
+class ForecastioDataPoint(object):
     def __init__(self, d=None):
         d = d or {}
 
