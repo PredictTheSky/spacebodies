@@ -13,9 +13,11 @@ sometimes called "bodies", thus the name.
 All of the astronomical objects are provided from the same public interface,
 using a string which defines which ones are supported.
 
-.. code-block:: pycon
-   
-   >>> sb = SpaceBodies()
+.. code-block:: python
+
+   >>> import spacebodies
+   >>> sb = SpaceBodies('forecast_key', 'spacetrack_username',
+                        'spacetrack_password')
    >>> sb.next_events("iss", lat=50.7184, lon=-3.5339)
    ...
 
@@ -30,6 +32,140 @@ To install Space Bodies:
 
 spacebodies requires Python 2.7.
 
+Configuration
+-------------
+
+To determine both the Weather and Space Object positions, Space Bodies relies
+on two external services. The first is `Forecast.io`_ for local weather
+predictions and the second is `Space Track`_, a Joint Space Operations Center
+project which exposes the position of a lot of known space objects.
+
+When first configuring ``SpaceBodies`` you'll want to provide these in the
+initialiser (as shown above).
+
+.. _Forecast.io: 'https://developer.forecast.io'
+.. _Space Track: 'https://www.space-track.org'
+
+Supported Space Objects
+-----------------------
+
+All of these can be used as keys for ``next_events`` (in lowercase form).
+
+Man Made Objects
+^^^^^^^^^^^^^^^^
+
+* ISS
+
+Planets
+^^^^^^^
+
+* Mercury
+* Venus
+* Mars
+* Jupiter
+* Saturn
+* Uranus
+* Neptune
+* Pluto
+
+Stars
+^^^^^
+
+* Sirrah
+* Caph
+* Algenib
+* Schedar
+* Mirach
+* Achernar
+* Almach
+* Hamal
+* Polaris
+* Menkar
+* Algol
+* Electra
+* Taygeta
+* Maia
+* Merope
+* Alcyone
+* Atlas
+* Zaurak
+* Aldebaran
+* Rigel
+* Capella
+* Bellatrix
+* Elnath
+* Nihal
+* Mintaka
+* Arneb
+* Alnilam
+* Alnitak
+* Saiph
+* Betelgeuse
+* Menkalinan
+* Mirzam
+* Canopus
+* Alhena
+* Sirius
+* Adara
+* Wezen
+* Castor
+* Procyon
+* Pollux
+* Naos
+* Alphard
+* Regulus
+* Algieba
+* Merak
+* Dubhe
+* Denebola
+* Phecda
+* Minkar
+* Megrez
+* Gienah Corvi
+* Mimosa
+* Alioth
+* Vindemiatrix
+* Mizar
+* Spica
+* Alcor
+* Alcaid
+* Agena
+* Thuban
+* Arcturus
+* Izar
+* Kochab
+* Alphecca
+* Unukalhai
+* Antares
+* Rasalgethi
+* Shaula
+* Rasalhague
+* Cebalrai
+* Etamin
+* Kaus Australis
+* Vega
+* Sheliak
+* Nunki
+* Sulafat
+* Arkab Prior
+* Arkab Posterior
+* Rukbat
+* Albereo
+* Tarazed
+* Altair
+* Alshain
+* Sadr
+* Peacock
+* Deneb
+* Alderamin
+* Alfirk
+* Enif
+* Sadalmelik
+* Alnair
+* Fomalhaut
+* Scheat
+* Markab
+
 Contribute
 ----------
 
@@ -37,6 +173,12 @@ Contribute
 
    $ pip install -r requirements.txt
    $ python setup.py test
+
+The tests look for the following environment variables:
+
+* ``FORECAST_KEY``: An API key from `Forecast.io`_
+* ``SPACETRACK_USERNAME``: A username from `Space Track`_
+* ``SPACETRACK_PASSWORD``: A password for the username above.
 
 #. Check for open issues, or create a new one.
 #. Fork `the repository`_, make your changes to **master** (or your own
