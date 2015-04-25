@@ -1,2 +1,2 @@
-requests
-pyephem==3.7.5.1
+requests==2.6.2
+pyephem==3.7.5.3
