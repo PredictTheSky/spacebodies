@@ -1,5 +1,4 @@
 import datetime
-
 import forecastio
 
 SKY_STATE = ['clear', 'scattered cloud', 'cloudy with breaks', 'cloudy']
