@@ -1,0 +1,17 @@
+{
+    "time": 1430146800,
+    "summary": "Partly Cloudy",
+    "icon": "partly-cloudy-day",
+    "precipIntensity": 0,
+    "precipProbability": 0,
+    "temperature": 12.24,
+    "apparentTemperature": 12.24,
+    "dewPoint": -0.1,
+    "humidity": 0.43,
+    "windSpeed": 0.39,
+    "windBearing": 272,
+    "visibility": 16.09,
+    "cloudCover": 0.42,
+    "pressure": 1011.46,
+    "ozone": 388.87
+}

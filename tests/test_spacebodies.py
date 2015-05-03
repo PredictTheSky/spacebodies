@@ -1,34 +1,56 @@
 # -*- coding: utf-8 -*-
 
-"""
-tests: spacebodies
+from __future__ import unicode_literals
 
-The test case for SpaceBodies
-"""
-
-import datetime
 import unittest
+import httpretty
 import os
 
+from utils import fixture
+
+from datetime import datetime
 import spacebodies
 from spacebodies import forecast
+
+FORECASTIO_API_KEY = os.getenv('FORECAST_KEY', '')
+SPACETRACK_USERNAME = os.getenv('SPACETRACK_USERNAME', '')
+SPACETRACK_PASSWORD = os.getenv('SPACETRACK_PASSWORD', '')
+LATITUDE = "51.47781"
+LONGITUDE = "-0.001475"
 
 
 class SpaceBodiesTestCase(unittest.TestCase):
     def setUp(self):
-        forecast_key = os.getenv('FORECAST_KEY', '')
-        spacetrack_username = os.getenv('SPACETRACK_USERNAME', '')
-        spacetrack_password = os.getenv('SPACETRACK_PASSWORD', '')
+        self.space_bodies = spacebodies.SpaceBodies(FORECASTIO_API_KEY,
+                                                    SPACETRACK_USERNAME,
+                                                    SPACETRACK_PASSWORD)
 
-        self.space_bodies = spacebodies.SpaceBodies(forecast_key,
-                                                    spacetrack_username,
-                                                    spacetrack_password)
+    def register_forecast_http_call(self):
+        url = "https://api.forecast.io/forecast/%s/%s,%s"\
+              "?units=si&exclude=currently,minutely,daily&extend=hourly" % (
+                  FORECASTIO_API_KEY, LATITUDE, LONGITUDE)
 
+        httpretty.register_uri(httpretty.GET, url,
+                               body=fixture('forecast.json'))
+
+    def register_spacetrack_http_call(self):
+        httpretty.register_uri(httpretty.POST,
+                               'https://www.space-track.org/ajaxauth/login',
+                               body="")
+
+        url = 'https://www.space-track.org/basicspacedata/query/class/' \
+              'tle_latest/NORAD_CAT_ID/25544/ORDINAL/1/'
+        httpretty.register_uri(httpretty.GET, url,
+                               body=fixture('spacetrack_tle.json'))
+
+    @httpretty.activate
     def test_next_iss_events(self):
-        test_timestamp = datetime.datetime.now()
-        events = self.space_bodies.next_events("iss", lat="50.7184",
-                                               lon="-3.5339",
-                                               timestamp=test_timestamp)
+        self.register_forecast_http_call()
+        self.register_spacetrack_http_call()
+
+        now = datetime(2015, 5, 2, 21, 0, 0)
+        events = self.space_bodies.next_events("iss", lat=LATITUDE,
+                                               lon=LONGITUDE, timestamp=now)
         """
         Expected results got from Heaven's Above page. Their default
         is the time at 10 degrees above the horizon rather than rise
@@ -39,96 +61,123 @@ class SpaceBodiesTestCase(unittest.TestCase):
         """
         self.assertGreater(len(events), 0)
 
+    @httpretty.activate
     def test_next_mercury_events(self):
-        test_timestamp = datetime.datetime(2013, 9, 7, 0, 0)
-        events = self.space_bodies.next_events("mercury", lat="50.7184",
-                                               lon="-3.5339",
-                                               timestamp=test_timestamp)
-        self.assertEqual(len(events), 10)
+        self.register_forecast_http_call()
 
+        now = datetime(2015, 5, 2, 21, 0, 0)
+        events = self.space_bodies.next_events("mercury", lat=LATITUDE,
+                                               lon=LONGITUDE, timestamp=now)
+        self.assertEqual(len(events), 7)
+
+    @httpretty.activate
     def test_next_venus_events(self):
-        test_timestamp = datetime.datetime(2013, 9, 7, 0, 0)
-        events = self.space_bodies.next_events("venus", lat="50.7184",
-                                               lon="-3.5339",
-                                               timestamp=test_timestamp)
-        self.assertEqual(len(events), 10)
+        self.register_forecast_http_call()
 
+        now = datetime(2015, 5, 2, 21, 0, 0)
+        events = self.space_bodies.next_events("venus", lat=LATITUDE,
+                                               lon=LONGITUDE, timestamp=now)
+        self.assertEqual(len(events), 7)
+
+    @httpretty.activate
     def test_next_mars_events(self):
-        test_timestamp = datetime.datetime(2013, 9, 7, 0, 0)
-        events = self.space_bodies.next_events("mars", lat="50.7184",
-                                               lon="-3.5339",
-                                               timestamp=test_timestamp)
-        self.assertEqual(len(events), 10)
+        self.register_forecast_http_call()
 
+        now = datetime(2015, 5, 2, 21, 0, 0)
+        events = self.space_bodies.next_events("mars", lat=LATITUDE,
+                                               lon=LONGITUDE, timestamp=now)
+        self.assertEqual(len(events), 7)
+
+    @httpretty.activate
     def test_next_jupiter_events(self):
-        test_timestamp = datetime.datetime(2013, 9, 7, 0, 0)
-        events = self.space_bodies.next_events("jupiter", lat="50.7184",
-                                               lon="-3.5339",
-                                               timestamp=test_timestamp)
-        self.assertEqual(len(events), 10)
+        self.register_forecast_http_call()
 
+        now = datetime(2015, 5, 2, 21, 0, 0)
+        events = self.space_bodies.next_events("jupiter", lat=LATITUDE,
+                                               lon=LONGITUDE, timestamp=now)
+        self.assertEqual(len(events), 7)
+
+    @httpretty.activate
     def test_next_saturn_events(self):
-        test_timestamp = datetime.datetime(2013, 9, 7, 0, 0)
-        events = self.space_bodies.next_events("saturn", lat="50.7184",
-                                               lon="-3.5339",
-                                               timestamp=test_timestamp)
-        self.assertEqual(len(events), 10)
+        self.register_forecast_http_call()
 
+        now = datetime(2015, 5, 2, 21, 0, 0)
+        events = self.space_bodies.next_events("saturn", lat=LATITUDE,
+                                               lon=LONGITUDE, timestamp=now)
+        self.assertEqual(len(events), 7)
+
+    @httpretty.activate
     def test_next_uranus_events(self):
-        test_timestamp = datetime.datetime(2013, 9, 7, 0, 0)
-        events = self.space_bodies.next_events("uranus", lat="50.7184",
-                                               lon="-3.5339",
-                                               timestamp=test_timestamp)
-        self.assertEqual(len(events), 10)
+        self.register_forecast_http_call()
 
+        now = datetime(2015, 5, 2, 21, 0, 0)
+        events = self.space_bodies.next_events("uranus", lat=LATITUDE,
+                                               lon=LONGITUDE, timestamp=now)
+        self.assertEqual(len(events), 7)
+
+    @httpretty.activate
     def test_next_neptune_events(self):
-        test_timestamp = datetime.datetime(2013, 9, 7, 0, 0)
-        events = self.space_bodies.next_events("neptune", lat="50.7184",
-                                               lon="-3.5339",
-                                               timestamp=test_timestamp)
-        self.assertEqual(len(events), 10)
+        self.register_forecast_http_call()
 
+        now = datetime(2015, 5, 2, 21, 0, 0)
+        events = self.space_bodies.next_events("neptune", lat=LATITUDE,
+                                               lon=LONGITUDE, timestamp=now)
+        self.assertEqual(len(events), 7)
+
+    @httpretty.activate
     def test_next_pluto_events(self):
-        test_timestamp = datetime.datetime(2013, 9, 7, 0, 0)
-        events = self.space_bodies.next_events("pluto", lat="50.7184",
-                                               lon="-3.5339",
-                                               timestamp=test_timestamp)
-        self.assertEqual(len(events), 10)
+        self.register_forecast_http_call()
 
+        now = datetime(2015, 5, 2, 21, 0, 0)
+        events = self.space_bodies.next_events("pluto", lat=LATITUDE,
+                                               lon=LONGITUDE, timestamp=now)
+        # because the rise time is offset, we'll calculate one short of the
+        # others
+        self.assertEqual(len(events), 6)
+
+    @httpretty.activate
     def test_next_sirius_events(self):
-        test_timestamp = datetime.datetime(2013, 9, 7, 0, 0)
-        events = self.space_bodies.next_events("sirius", lat="50.7184",
-                                               lon="-3.5339",
-                                               timestamp=test_timestamp)
-        self.assertEqual(len(events), 10)
+        self.register_forecast_http_call()
 
+        now = datetime(2015, 5, 2, 21, 0, 0)
+        events = self.space_bodies.next_events("sirius", lat=LATITUDE,
+                                               lon=LONGITUDE, timestamp=now)
+        self.assertEqual(len(events), 7)
+
+    @httpretty.activate
     def test_next_arcturus_events(self):
-        test_timestamp = datetime.datetime(2013, 9, 7, 0, 0)
-        events = self.space_bodies.next_events("arcturus", lat="50.7184",
-                                               lon="-3.5339",
-                                               timestamp=test_timestamp)
-        self.assertEqual(len(events), 10)
+        self.register_forecast_http_call()
 
+        now = datetime(2015, 5, 2, 21, 0, 0)
+        events = self.space_bodies.next_events("arcturus", lat=LATITUDE,
+                                               lon=LONGITUDE, timestamp=now)
+        self.assertEqual(len(events), 7)
+
+    @httpretty.activate
     def test_next_events_with_default_timestamp(self):
-        events = self.space_bodies.next_events("mercury", lat="50.7184",
-                                               lon="-3.5339")
+        self.register_forecast_http_call()
+
+        events = self.space_bodies.next_events("mercury", lat=LATITUDE,
+                                               lon=LONGITUDE)
 
         # we're checking that the type responds correctly, but we're not
         # worried about the results
         self.assertIsInstance(events, list)
 
     def test_next_unknown_star_events(self):
-        test_timestamp = datetime.datetime(2013, 9, 7, 0, 0)
-        events = self.space_bodies.next_events("unknown_star", lat="50.7184",
-                                               lon="-3.5339",
-                                               timestamp=test_timestamp)
+        now = datetime(2015, 5, 2, 21, 0, 0)
+        events = self.space_bodies.next_events("unknown_star", lat=LATITUDE,
+                                               lon=LONGITUDE, timestamp=now)
         self.assertEqual(events, "There is no such body in catalog")
 
+    @httpretty.activate
     def test_next_events_have_weather(self):
-        test_timestamp = datetime.datetime(2013, 9, 7, 0, 0)
-        events = self.space_bodies.next_events("mars", lat="50.7184",
-                                               lon="-3.5339",
-                                               timestamp=test_timestamp)
+        self.register_forecast_http_call()
+
+        now = datetime(2015, 5, 2, 21, 0, 0)
+        events = self.space_bodies.next_events("mars", lat=LATITUDE,
+                                               lon=LONGITUDE, timestamp=now)
+
         for event in events:
             self.assertIn(event.sky_state, forecast.SKY_STATE)
 

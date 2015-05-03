@@ -38,23 +38,26 @@ class SpaceBody(object):
             timestamp = datetime.datetime.now()
 
         observer = ephem.Observer()
-        forecaster = Forecast(self._config.forecast_key, lat, lon)
+        forecaster = Forecast(self._config.forecast_key)
+        forecaster.load(lat, lon)
         observer.lat, observer.lon = lat, lon
         date = ephem.Date(timestamp)
-        ten_days_later = date + 10
+        seven_days_later = date + 6
         if self.category is 'satellite':
+            print 'is satellite'
             tle_getter = TLE_getter(self._config.spacetrack_username,
                                     self._config.spacetrack_password)
             self.tle = tle_getter.get_data(self.id)
+            print 'tle: %s' % self.tle
             self.body = ephem.readtle(self.tle.tle_line0, self.tle.tle_line1,
                                       self.tle.tle_line2)
 
         events = []
-        while date <= ten_days_later:
+        while date <= seven_days_later:
             observer.date = date
             self.body.compute(observer)
             """ Avoid overrunning the end date looking for the next event. """
-            if self.body.rise_time > ten_days_later:
+            if self.body.rise_time > seven_days_later:
                 break
             if self._is_transit_visible():
                 weather = forecaster.forecast(observer.date.datetime())
@@ -79,6 +82,7 @@ class SpaceBody(object):
 
     def _next_event(self, sky_state):
         event = SpaceEvent(self.id, self.name, self.category)
+        # TODO: is this correct and useful?
         event.start(self.body.rise_time, (0, self.body.rise_az))
         event.end(self.body.set_time, (0, self.body.set_az))
         event.sky_state(sky_state)
