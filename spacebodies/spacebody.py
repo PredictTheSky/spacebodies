@@ -44,11 +44,9 @@ class SpaceBody(object):
         date = ephem.Date(timestamp)
         seven_days_later = date + 6
         if self.category is 'satellite':
-            print 'is satellite'
             tle_getter = TLE_getter(self._config.spacetrack_username,
                                     self._config.spacetrack_password)
             self.tle = tle_getter.get_data(self.id)
-            print 'tle: %s' % self.tle
             self.body = ephem.readtle(self.tle.tle_line0, self.tle.tle_line1,
                                       self.tle.tle_line2)
 
